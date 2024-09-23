@@ -442,6 +442,28 @@ module.exports = (Handlebars, _) =>{
     const moduleAlias = _.camelCase(obj.operationId);
     return `[${moduleAlias}.option.value.toString()]: ${moduleAlias}.execute,`
   });
-  
+
+  Handlebars.registerHelper('importResource', (obj) => {
+    const moduleAlias = _.camelCase(obj.name);
+    const moduleFile = _.kebabCase(obj.name);
+    return `import * as ${moduleAlias} from './${moduleFile}';`;
+  });
+
+  Handlebars.registerHelper('appendResourceOption', (obj) => {
+    const moduleAlias = _.camelCase(obj.name);
+
+    return `${moduleAlias}.option,`
+  });
+
+  Handlebars.registerHelper('appendResourceDescription', (obj) => {
+    const moduleAlias = _.camelCase(obj.name);
+
+    return `...${moduleAlias}.descriptions,`
+  });
+
+  Handlebars.registerHelper('appendResourceHandler', (obj) => {
+    const moduleAlias = _.camelCase(obj.name);
+    return `[${moduleAlias}.option.value.toString()]: ${moduleAlias}.router,`
+  });
 }
 

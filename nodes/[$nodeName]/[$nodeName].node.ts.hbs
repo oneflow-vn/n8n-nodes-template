@@ -1,0 +1,33 @@
+import {INodeType, INodeTypeDescription} from 'n8n-workflow';
+import { properties } from './{{nodeName}}.properties';
+
+export class {{nodeName}} implements INodeType {
+    description: INodeTypeDescription = {
+        displayName: 'Petstore',
+        name: 'petstore',
+        icon: 'fa:file',
+        group: ['transform'],
+        version: 1,
+        subtitle: '\=\{\{$parameter["operation"] + ": " + $parameter["resource"]\}\}',
+        description: 'Interact with Petstore API',
+        defaults: {
+            name: 'Petstore',
+        },
+        inputs: ['main'],
+        outputs: ['main'],
+        credentials: [
+            {
+                name: 'petstoreApi',
+                required: false,
+            },
+        ],
+        requestDefaults: {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            baseURL: 'https://petstore3.swagger.io/api/v3',
+        },
+        properties: properties,
+    };
+}
