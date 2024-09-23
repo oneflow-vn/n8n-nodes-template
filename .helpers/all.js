@@ -1,6 +1,7 @@
 // Module constructor provides dependency injection from the generator instead of relying on require's cache here to ensure
 // the same instance of Handlebars gets the helpers installed and Lodash is definitiely available
 // regardless of where remote templates reside: in another Node project or a plain directory, which may have different or no modules available.
+const _ = require('lodash');
 
 // This is generated from the OpenAPI data, which we don't care about
 const invalidProperties = new Set([
@@ -419,5 +420,28 @@ module.exports = (Handlebars, _) =>{
     console.log(str)
   });
 
+  Handlebars.registerHelper('importOperation', (obj) => {
+    const moduleAlias = _.camelCase(obj.operationId);
+    const moduleFile = _.kebabCase(obj.operationId);
+    return `import * as ${moduleAlias} from './${moduleFile}';`;
+  });
+
+  Handlebars.registerHelper('appendOperationOption', (obj) => {
+    const moduleAlias = _.camelCase(obj.operationId);
+
+    return `${moduleAlias}.option,`
+  });
+
+  Handlebars.registerHelper('appendOperationDescription', (obj) => {
+    const moduleAlias = _.camelCase(obj.operationId);
+
+    return `...${moduleAlias}.descriptions,`
+  });
+
+  Handlebars.registerHelper('appendOperationHandler', (obj) => {
+    const moduleAlias = _.camelCase(obj.operationId);
+    return `[${moduleAlias}.option.value.toString()]: ${moduleAlias}.execute,`
+  });
+  
 }
 

@@ -1,0 +1,10 @@
+import {
+{{#each operation}}
+  {{#each this.path}}
+    {{#validMethod @key}}
+  {{funcOperation ../operationId}},
+    {{/validMethod}}
+  {{/each}}
+{{/each}}
+} from '../controllers/{{operation_name}}'
+
