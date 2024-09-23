@@ -10,7 +10,7 @@ export class Merge extends VersionedNodeType {
 			name: 'merge',
 			icon: 'file:merge.svg',
 			group: ['transform'],
-			subtitle: '={{$parameter["mode"]}}',
+			subtitle: '\=\{\{$parameter\[\"mode\"\]\}\}',
 			description: 'Merges data of multiple streams once data from both is available',
 			defaultVersion: 3,
 		};

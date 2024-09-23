@@ -35,7 +35,7 @@ export class HttpBinApi implements ICredentialType {
 		type: 'generic',
 		properties: {
 			headers: {
-				Authorization: '={{"Bearer " + $credentials.token}}',
+				Authorization: '\=\{\{\"Bearer " + \$credentials.token\}\}',
 			},
 		},
 	};
@@ -43,7 +43,7 @@ export class HttpBinApi implements ICredentialType {
 	// The block below tells how this credential can be tested
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: '={{$credentials?.domain}}',
+			baseURL: '\=\{\{$credentials?.domain\}\}',
 			url: '/bearer',
 		},
 	};
