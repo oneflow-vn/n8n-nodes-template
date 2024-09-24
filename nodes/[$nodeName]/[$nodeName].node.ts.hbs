@@ -15,7 +15,12 @@ export class {{nodeName}} implements INodeType {
         },
         inputs: ['main'],
         outputs: ['main'],
-        credentials: [],
+        credentials: [
+            {
+                name: 'larksuiteOAuth2Api',
+                required: true
+            }
+        ],
         requestDefaults: {
             headers: {
                 Accept: 'application/json',
