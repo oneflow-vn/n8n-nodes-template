@@ -4,7 +4,10 @@ import { INodeProperties } from 'n8n-workflow'
 {{importResource this}}
 {{/each}}
 
+const resourceSelect: INodeProperties = {{stringify resourceSelect}};
+
 export const properties: INodeProperties[] = [
+    resourceSelect,
     {{#each resources}}
     {{appendResourceOption this}}
     {{/each}}

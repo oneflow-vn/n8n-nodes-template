@@ -1,13 +1,24 @@
-import { INodeProperties } from 'n8n-workflow'
+import { INodeProperties, INodePropertyOptions } from 'n8n-workflow'
 
 {{#each operations}}
 {{importOperation this}}
 {{/each}}
 
+const operations: INodePropertyOptions[] = [
+    {{#each operations}}
+    {{operationName this}}.option,
+    {{/each}}
+];
+
 export const name = '{{res.name}}';
 
-const operationSelect: INodeProperties = {{stringify operationSelect}};
+const operationSelect: INodeProperties = {{operationSelectBase operationSelect}};
 
+// overwrite the options of the operationSelect
+operationSelect.options = operations;
+
+// set the default operation
+operationSelect.default = operations.length > 0 ? operations[0].value : '';
 
 export const properties: INodeProperties[] = [
 	operationSelect,

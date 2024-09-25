@@ -465,5 +465,30 @@ module.exports = (Handlebars, _) =>{
     const moduleAlias = _.camelCase(obj.name);
     return `[${moduleAlias}.option.value.toString()]: ${moduleAlias}.router,`
   });
+
+  Handlebars.registerHelper('operationSelectBase', (operationSelect) => {
+    // return all properties except the options
+    const { options, ...rest } = operationSelect
+    return JSON.stringify(rest, null, 2)
+  });
+
+  Handlebars.registerHelper('operationName', (obj) => {
+    return _.camelCase(obj.name);
+  });
+
+  Handlebars.registerHelper('nodeIcon', (icon) => {
+    if (!icon) {
+      return 'fa:code'
+    }
+
+    if (icon.startsWith('fa:')) {
+      return icon
+    }
+
+    if (icon.startsWith('./')) {
+      // file:name.ext
+      return `file:${icon}`
+    }
+  });
 }
 
