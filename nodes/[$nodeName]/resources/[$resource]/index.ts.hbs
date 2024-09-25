@@ -6,7 +6,11 @@ import { INodeProperties } from 'n8n-workflow'
 
 export const name = '{{res.name}}';
 
+const operationSelect: INodeProperties = {{stringify operationSelect}};
+
+
 export const properties: INodeProperties[] = [
+	operationSelect,
     {{#each operations}}
     {{appendOperationDescription this}}
     {{/each}}
