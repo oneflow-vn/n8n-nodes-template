@@ -1,0 +1,11 @@
+import { INodeProperties } from 'n8n-workflow'
+
+{{#each resources}}
+{{importResource this}}
+{{/each}}
+
+export const properties: INodeProperties[] = [
+    {{#each resources}}
+    {{appendResourceOption this}}
+    {{/each}}
+];

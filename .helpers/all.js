@@ -421,25 +421,25 @@ module.exports = (Handlebars, _) =>{
   });
 
   Handlebars.registerHelper('importOperation', (obj) => {
-    const moduleAlias = _.camelCase(obj.operationId);
-    const moduleFile = _.kebabCase(obj.operationId);
+    const moduleAlias = _.camelCase(obj.name);
+    const moduleFile = _.kebabCase(obj.name);
     return `import * as ${moduleAlias} from './${moduleFile}';`;
   });
 
   Handlebars.registerHelper('appendOperationOption', (obj) => {
-    const moduleAlias = _.camelCase(obj.operationId);
+    const moduleAlias = _.camelCase(obj.name);
 
     return `${moduleAlias}.option,`
   });
 
   Handlebars.registerHelper('appendOperationDescription', (obj) => {
-    const moduleAlias = _.camelCase(obj.operationId);
+    const moduleAlias = _.camelCase(obj.name);
 
-    return `...${moduleAlias}.descriptions,`
+    return `...${moduleAlias}.properties,`
   });
 
   Handlebars.registerHelper('appendOperationHandler', (obj) => {
-    const moduleAlias = _.camelCase(obj.operationId);
+    const moduleAlias = _.camelCase(obj.name);
     return `[${moduleAlias}.option.value.toString()]: ${moduleAlias}.execute,`
   });
 
@@ -452,7 +452,7 @@ module.exports = (Handlebars, _) =>{
   Handlebars.registerHelper('appendResourceOption', (obj) => {
     const moduleAlias = _.camelCase(obj.name);
 
-    return `${moduleAlias}.option,`
+    return `...${moduleAlias}.properties,`
   });
 
   Handlebars.registerHelper('appendResourceDescription', (obj) => {
