@@ -455,6 +455,12 @@ module.exports = (Handlebars, _) =>{
     return `...${moduleAlias}.properties,`
   });
 
+  Handlebars.registerHelper('resourceAlias', (obj) => {
+    const moduleAlias = _.camelCase(obj.name);
+
+    return moduleAlias;
+  });
+
   Handlebars.registerHelper('appendResourceDescription', (obj) => {
     const moduleAlias = _.camelCase(obj.name);
 
@@ -472,7 +478,7 @@ module.exports = (Handlebars, _) =>{
     return JSON.stringify(rest, null, 2)
   });
 
-  Handlebars.registerHelper('operationName', (obj) => {
+  Handlebars.registerHelper('operationAlias', (obj) => {
     return _.camelCase(obj.name);
   });
 
@@ -490,6 +496,31 @@ module.exports = (Handlebars, _) =>{
 			const filename = icon.split('/').pop()
       return `file:${filename}`
     }
+  });
+
+  Handlebars.registerHelper('generateAuthenticationProperties', (credentials) => {
+    if (!credentials && credentials.length < 2) {
+      return [];
+    }
+
+    const baseProperties = {
+      displayName: 'Authentication',
+      name: 'authentication',
+      type: 'options',
+      options: [],
+      default: '',
+    };
+
+    baseProperties.options = credentials.map((cred) => {
+      return {
+        name: cred.displayName || cred.name,
+        value: cred.name,
+      };
+    });
+
+    baseProperties.default = baseProperties.options[0].value;
+
+    return JSON.stringify([baseProperties], null, 2);
   });
 }
 

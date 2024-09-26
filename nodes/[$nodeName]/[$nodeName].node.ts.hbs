@@ -1,5 +1,6 @@
 import {INodeType, INodeTypeDescription} from 'n8n-workflow';
 import { properties } from './{{nodeName}}.properties';
+import { methods } from './{{nodeName}}.methods';
 
 export class {{nodeName}} implements INodeType {
     description: INodeTypeDescription = {
@@ -25,4 +26,6 @@ export class {{nodeName}} implements INodeType {
         },
         properties: properties,
     };
+
+    methods = methods;
 }
