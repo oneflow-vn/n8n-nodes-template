@@ -487,7 +487,8 @@ module.exports = (Handlebars, _) =>{
 
     if (icon.startsWith('./')) {
       // file:name.ext
-      return `file:${icon}`
+			const filename = icon.split('/').pop()
+      return `file:${filename}`
     }
   });
 }
