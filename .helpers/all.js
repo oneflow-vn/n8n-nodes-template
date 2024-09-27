@@ -499,8 +499,8 @@ module.exports = (Handlebars, _) =>{
   });
 
   Handlebars.registerHelper('generateAuthenticationProperties', (credentials) => {
-    if (!credentials && credentials.length < 2) {
-      return [];
+    if (!credentials || credentials.length < 2) {
+      return JSON.stringify([], null, 2);
     }
 
     const baseProperties = {
