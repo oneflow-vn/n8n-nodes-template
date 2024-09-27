@@ -511,14 +511,21 @@ module.exports = (Handlebars, _) =>{
       default: '',
     };
 
+		const displayOptionsShow = _.get(credentials[0], 'displayOptions.show', {})
+		const displayOptionsShowKey = Object.keys(displayOptionsShow)[0]
+
     baseProperties.options = credentials.map((cred) => {
+			const displayOptionsValueStr = _.get(cred, `displayOptions.show.${displayOptionsShowKey}[0]`, cred.name)
+			// trim =
+			const displayOptionsValue = displayOptionsValueStr.replace(/^=/, '')
       return {
         name: cred.displayName || cred.name,
-        value: cred.name,
+        value: displayOptionsValue,
       };
     });
 
-    baseProperties.default = baseProperties.options[0].value;
+		baseProperties.name = displayOptionsShowKey || 'authentication';
+    baseProperties.default = _.get(baseProperties, 'options[0].value', '');
 
     return JSON.stringify([baseProperties], null, 2);
   });
