@@ -3,30 +3,6 @@
 // regardless of where remote templates reside: in another Node project or a plain directory, which may have different or no modules available.
 const _ = require('lodash');
 
-// This is generated from the OpenAPI data, which we don't care about
-const invalidProperties = new Set([
-  'description',
-  'summaryAsHTML',
-  'descriptionAsHTML',
-  'generatedExample',
-  'slug',
-  'x-stoplight',
-  'x-original-ref',
-  'title',
-]);
-
-function removeInvalidProperties(obj) {
-  if (typeof obj === 'object') {
-    for(let prop in obj) {
-      if (invalidProperties.has(prop)) {
-        delete obj[prop];
-      } else if (typeof obj[prop] === 'object') {
-        removeInvalidProperties(obj[prop]);
-      }
-    }
-  }
-}
-
 module.exports = (Handlebars, _) =>{
 
   const parseRef = (refs) => {
@@ -257,9 +233,7 @@ module.exports = (Handlebars, _) =>{
   });
 
   Handlebars.registerHelper('stringify', (obj = {}) => {
-    removeInvalidProperties(obj)
-
-    return JSON.stringify(obj, null, 2);
+		return JSON.stringify(obj, null, 2);
   });
 
   /**
@@ -444,10 +418,20 @@ module.exports = (Handlebars, _) =>{
   });
 
   Handlebars.registerHelper('importResource', (obj) => {
-    const moduleAlias = _.camelCase(obj.name);
+    let moduleAlias = _.camelCase(obj.name);
     const moduleFile = _.kebabCase(obj.name);
+
+		if (moduleFile === 'default') {
+			moduleAlias = 'defaultResource'
+		}
+
     return `import * as ${moduleAlias} from './${moduleFile}';`;
   });
+
+	Handlebars.registerHelper('camelCase', (str) => {
+    return _.camelCase(str);
+  });
+
 
   Handlebars.registerHelper('appendResourceOption', (obj) => {
     const moduleAlias = _.camelCase(obj.name);
@@ -457,6 +441,10 @@ module.exports = (Handlebars, _) =>{
 
   Handlebars.registerHelper('resourceAlias', (obj) => {
     const moduleAlias = _.camelCase(obj.name);
+
+		if (moduleAlias === 'default') {
+			return 'defaultResource';
+		}
 
     return moduleAlias;
   });

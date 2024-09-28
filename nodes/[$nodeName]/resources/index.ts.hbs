@@ -10,12 +10,15 @@ const authenticationProperties: INodeProperties[] = {{generateAuthenticationProp
 
 const resourceSelect: INodeProperties[] = [{{stringify resourceSelect}}];
 
+const extraProperties: INodeProperties[] = {{stringify extraProperties}};
+
 const rawProperties: INodeProperties[] = [
     ...authenticationProperties,
     ...resourceSelect,
     {{#each resources}}
     ...{{resourceAlias this}}.properties,
     {{/each}}
+		...extraProperties
 ];
 
 const { properties, methods: selfMethods } = runHooks(rawProperties);
