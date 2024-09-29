@@ -1,10 +1,18 @@
 import { INodePropertyOptions } from 'n8n-workflow'
+
+/* eslint-disable */
+// @ts-ignore
+import * as helpers from '../../../helpers'
+/* eslint-disable */
+
 import { properties as rawProperties } from './properties';
 import runHooks from './hooks';
 
 export const name = '{{operation.name}}';
 
-const rawOption: INodePropertyOptions = {{stringify operation}};
+/* eslint-disable */
+const rawOption: INodePropertyOptions = {{jsValue operation}};
+/* eslint-disable */
 
 const { properties, option } = runHooks(rawOption, rawProperties)
 

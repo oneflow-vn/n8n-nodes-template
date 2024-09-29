@@ -517,5 +517,55 @@ module.exports = (Handlebars, _) =>{
 
     return JSON.stringify([baseProperties], null, 2);
   });
-}
 
+
+	Handlebars.registerHelper('jsValue', (obj) => {
+
+		function renderJsValue(value) {
+			// render expressions as is
+			// {{expression}} -> expression
+			const expressionRegex = /^{{(.*)}}$/;
+			if (typeof value === 'string' && expressionRegex.test(value)) {
+				const expression = value.replace(expressionRegex, '$1');
+				return expression;
+			}
+
+			if (typeof value === 'string') {
+				return JSON.stringify(value)
+			}
+
+			if (Array.isArray(value)) {
+				return `[${value.map(renderJsValue).join(', ')}]`
+			}
+
+			if (typeof value === 'object') {
+				return renderJsObject(value)
+			}
+
+			return JSON.stringify(value)
+		}
+
+		function renderKey(key) {
+			if (key.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/)) {
+				return key;
+			}
+
+			return JSON.stringify(key);
+		}
+
+		function renderJsEntry(key, value) {
+			return `${renderKey(key)}: ${renderJsValue(value)}`
+		}
+
+		function renderJsObject(obj) {
+			const entries = Object.entries(obj).map(([key, value]) => renderJsEntry(key, value))
+			const js = `{
+					${entries.join(',\n')}
+			}`;
+			return js;
+		}
+
+		return renderJsValue(obj);
+	});
+
+};

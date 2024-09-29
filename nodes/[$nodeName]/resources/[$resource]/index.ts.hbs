@@ -13,7 +13,9 @@ const operations: INodePropertyOptions[] = [
 
 export const name = '{{res.name}}';
 
+/* eslint-disable */
 const operationSelect: INodeProperties = {{operationSelectBase operationSelect}};
+/* eslint-disable */
 
 // overwrite the options of the operationSelect
 operationSelect.options = operations;
