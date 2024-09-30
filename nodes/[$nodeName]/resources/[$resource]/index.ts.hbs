@@ -1,5 +1,5 @@
 import { INodeProperties, INodePropertyOptions } from 'n8n-workflow'
-import runHooks from './hooks'
+import { runHooks } from './hooks'
 
 {{#each operations}}
 {{importOperation this}}

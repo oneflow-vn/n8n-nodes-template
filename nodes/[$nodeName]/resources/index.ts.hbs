@@ -1,6 +1,6 @@
 import { INodeProperties } from 'n8n-workflow'
 import { aggregateNodeMethods } from '../helpers/methods'
-import runHooks from './hooks'
+import { runHooks } from './hooks'
 
 {{#each resources}}
 {{importResource this}}

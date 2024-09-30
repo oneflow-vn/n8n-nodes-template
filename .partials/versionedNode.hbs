@@ -1,0 +1,42 @@
+import {
+	IExecuteFunctions,
+	INodeExecutionData,
+	INodeType,
+	INodeTypeBaseDescription,
+	INodeTypeDescription,
+} from 'n8n-workflow';
+
+import { properties } from './{{nodeName}}.properties';
+import { methods } from './{{nodeName}}.methods';
+
+export class {{nodeName}} implements INodeType {
+	description: INodeTypeDescription;
+
+	constructor(baseDescription: INodeTypeBaseDescription) {
+		this.description = {
+			...baseDescription,
+            displayName: '{{displayName}}',
+            name: '{{camelCase nodeName}}',
+            icon: '{{nodeIcon icon}}',
+            group: ['transform'],
+            version: {{version}},
+            subtitle: '\=\{\{$parameter["operation"] + ": " + $parameter["resource"]\}\}',
+            description: '{{description}}',
+            defaults: {
+                name: '{{defaultName}}',
+            },
+            inputs: ['main'],
+            outputs: ['main'],
+            credentials: {{stringify credentials}},
+            requestDefaults: {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                baseURL: '{{baseUrl}}',
+            },
+
+			properties: properties,
+	    };
+    }
+}

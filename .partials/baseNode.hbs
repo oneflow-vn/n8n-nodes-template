@@ -1,0 +1,31 @@
+import {INodeType, INodeTypeDescription} from 'n8n-workflow';
+import { properties } from './{{nodeName}}.properties';
+import { methods } from './{{nodeName}}.methods';
+
+export class {{nodeName}} implements INodeType {
+    description: INodeTypeDescription = {
+        displayName: '{{displayName}}',
+        name: '{{camelCase nodeName}}',
+        icon: '{{nodeIcon icon}}',
+        group: ['transform'],
+        version: 1,
+        subtitle: '\=\{\{$parameter["operation"] + ": " + $parameter["resource"]\}\}',
+        description: '{{description}}',
+        defaults: {
+            name: '{{defaultName}}',
+        },
+        inputs: ['main'],
+        outputs: ['main'],
+        credentials: {{stringify credentials}},
+        requestDefaults: {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            baseURL: '{{baseUrl}}',
+        },
+        properties: properties,
+    };
+
+    methods = methods;
+}

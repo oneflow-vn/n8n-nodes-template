@@ -565,7 +565,9 @@ module.exports = (Handlebars, _) =>{
 			return js;
 		}
 
-		return renderJsValue(obj);
+		const js = renderJsValue(obj);
+
+    return js;
 	});
 
 };
