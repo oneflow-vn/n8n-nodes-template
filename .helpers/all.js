@@ -523,8 +523,8 @@ module.exports = (Handlebars, _) =>{
 
 		function renderJsValue(value) {
 			// render expressions as is
-			// {{expression}} -> expression
-			const expressionRegex = /^{{(.*)}}$/;
+			// ${expression} -> expression
+			const expressionRegex = /^\$\{(.*)\}$/;
 			if (typeof value === 'string' && expressionRegex.test(value)) {
 				const expression = value.replace(expressionRegex, '$1');
 				return expression;
@@ -558,7 +558,22 @@ module.exports = (Handlebars, _) =>{
 		}
 
 		function renderJsObject(obj) {
-			const entries = Object.entries(obj).map(([key, value]) => renderJsEntry(key, value))
+			const entries = Object.entries(obj)
+				// sort by key
+				// place displayName first
+				// otherwise sort alphabetically
+				.sort(([keyA], [keyB]) => {
+					if (keyA === 'displayName') {
+						return -1;
+					}
+
+					if (keyB === 'displayName') {
+						return 1;
+					}
+
+					return 0;
+				})
+				.map(([key, value]) => renderJsEntry(key, value))
 			const js = `{
 					${entries.join(',\n')}
 			}`;

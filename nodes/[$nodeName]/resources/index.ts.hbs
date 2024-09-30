@@ -1,3 +1,5 @@
+{{> commonFileHeader}}
+
 import { INodeProperties } from 'n8n-workflow'
 import { aggregateNodeMethods } from '../helpers/methods'
 import { runHooks } from './hooks'
@@ -8,9 +10,9 @@ import { runHooks } from './hooks'
 
 const authenticationProperties: INodeProperties[] = {{generateAuthenticationProperties credentials}};
 
-const resourceSelect: INodeProperties[] = [{{stringify resourceSelect}}];
+const resourceSelect: INodeProperties[] = [{{jsValue resourceSelect}}];
 
-const extraProperties: INodeProperties[] = {{stringify extraProperties}};
+const extraProperties: INodeProperties[] = {{jsValue extraProperties}};
 
 const rawProperties: INodeProperties[] = [
     ...authenticationProperties,
