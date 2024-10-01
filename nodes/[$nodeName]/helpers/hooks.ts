@@ -4,7 +4,14 @@ export async function preSendActionCustonBody (
 	this: IExecuteSingleFunctions,
 	requestOptions: IHttpRequestOptions,
 ): Promise<IHttpRequestOptions> {
-	// @ts-ignore
-	console.log('preSendActionCustonBody', requestOptions);
+	const { customBody } = requestOptions.body;
+	requestOptions.body = {
+		...requestOptions.body,
+		...customBody,
+	}
+
+	// delete customBody from body
+	delete requestOptions.body.customBody;
+
 	return Promise.resolve(requestOptions);
 }

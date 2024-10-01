@@ -1,6 +1,10 @@
 {{> commonFileHeader}}
 
 import { INodeProperties } from 'n8n-workflow'
+
+// @ts-ignore
+import * as helpers from '../helpers'
+
 import { aggregateNodeMethods } from '../helpers/methods'
 import { runHooks } from './hooks'
 
