@@ -1,6 +1,4 @@
 import {
-	IExecuteFunctions,
-	INodeExecutionData,
 	INodeType,
 	INodeTypeBaseDescription,
 	INodeTypeDescription,
@@ -11,6 +9,8 @@ import { methods } from './{{nodeName}}.methods';
 
 export class {{nodeName}} implements INodeType {
 	description: INodeTypeDescription;
+
+	methods = methods;
 
 	constructor(baseDescription: INodeTypeBaseDescription) {
 		this.description = {

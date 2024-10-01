@@ -475,7 +475,7 @@ module.exports = (Handlebars, _) =>{
       return 'fa:code'
     }
 
-    if (icon.startsWith('fa:')) {
+    if (icon.startsWith('fa:') || icon.startsWith('file:')) {
       return icon
     }
 
