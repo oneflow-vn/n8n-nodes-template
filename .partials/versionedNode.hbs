@@ -28,6 +28,9 @@ export class {{nodeName}} implements INodeType {
             inputs: ['main'],
             outputs: ['main'],
             credentials: {{stringify credentials}},
+						{{#if requestDefaults}}
+						requestDefaults: {{jsValue requestDefaults}},
+						{{else}}
             requestDefaults: {
                 headers: {
                     Accept: 'application/json',
@@ -35,6 +38,7 @@ export class {{nodeName}} implements INodeType {
                 },
                 baseURL: '{{baseUrl}}',
             },
+						{{/if}}
 
 			properties: properties,
 	    };

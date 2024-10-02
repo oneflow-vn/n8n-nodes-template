@@ -17,13 +17,19 @@ export class {{nodeName}} implements INodeType {
         inputs: ['main'],
         outputs: ['main'],
         credentials: {{stringify credentials}},
-        requestDefaults: {
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            baseURL: '{{baseUrl}}',
-        },
+
+				{{#if requestDefaults}}
+				requestDefaults: {{jsValue requestDefaults}},
+				{{else}}
+				requestDefaults: {
+						headers: {
+								Accept: 'application/json',
+								'Content-Type': 'application/json',
+						},
+						baseURL: '{{baseUrl}}',
+				},
+				{{/if}}
+
         properties: properties,
     };
 
