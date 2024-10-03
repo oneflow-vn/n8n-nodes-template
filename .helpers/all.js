@@ -3,7 +3,7 @@
 // regardless of where remote templates reside: in another Node project or a plain directory, which may have different or no modules available.
 const _ = require('lodash');
 
-module.exports = (Handlebars, _) =>{
+module.exports = (Handlebars, _) => {
 
   const parseRef = (refs) => {
     if (Array.isArray(refs) && refs.length > 0) {
@@ -115,7 +115,7 @@ module.exports = (Handlebars, _) =>{
   Handlebars.registerHelper('equalContext', (context, lvalue, rvalue, options) => {
     if (arguments.length < 3)
       throw new Error('Handlebars Helper equal needs 2 parameters');
-    if (lvalue!=rvalue) {
+    if (lvalue != rvalue) {
       return options.inverse(context);
     }
     return options.fn(context);
@@ -127,7 +127,7 @@ module.exports = (Handlebars, _) =>{
   Handlebars.registerHelper('endsWith', (lvalue, rvalue, options) => {
     if (arguments.length < 3)
       throw new Error('Handlebars Helper equal needs 2 parameters');
-    if (lvalue.lastIndexOf(rvalue) !== lvalue.length-1 || lvalue.length-1 < 0) {
+    if (lvalue.lastIndexOf(rvalue) !== lvalue.length - 1 || lvalue.length - 1 < 0) {
       return options.inverse(this);
     }
     return options.fn(this);
@@ -204,19 +204,19 @@ module.exports = (Handlebars, _) =>{
 
     const operator = options.hash.operator || '==';
     const operators = {
-      '==':       (l,r) => { return l == r; },
-      '===':      (l,r) => { return l === r; },
-      '!=':       (l,r) => { return l != r; },
-      '<':        (l,r) => { return l < r; },
-      '>':        (l,r) => { return l > r; },
-      '<=':       (l,r) => { return l <= r; },
-      '>=':       (l,r) => { return l >= r; },
-      typeof:     (l,r) => { return typeof l == r; }
+      '==': (l, r) => { return l == r; },
+      '===': (l, r) => { return l === r; },
+      '!=': (l, r) => { return l != r; },
+      '<': (l, r) => { return l < r; },
+      '>': (l, r) => { return l > r; },
+      '<=': (l, r) => { return l <= r; },
+      '>=': (l, r) => { return l >= r; },
+      typeof: (l, r) => { return typeof l == r; }
     };
 
     if (!operators[operator]) throw new Error(`Handlebars Helper 'compare' doesn't know the operator ${operator}`);
 
-    const result = operators[operator](lvalue,rvalue);
+    const result = operators[operator](lvalue, rvalue);
 
     if (result) {
       return options.fn(this);
@@ -233,7 +233,7 @@ module.exports = (Handlebars, _) =>{
   });
 
   Handlebars.registerHelper('stringify', (obj = {}) => {
-		return JSON.stringify(obj, null, 2);
+    return JSON.stringify(obj, null, 2);
   });
 
   /**
@@ -354,11 +354,11 @@ module.exports = (Handlebars, _) =>{
    * Determine if an object was defined without a reference
    */
   Handlebars.registerHelper('isLoneObj', (context, options) => {
-     if(context.type === 'object' && !Array.isArray(context['x-original-ref'])) {
-       return options.fn(context);
-     }
+    if (context.type === 'object' && !Array.isArray(context['x-original-ref'])) {
+      return options.fn(context);
+    }
 
-     return options.inverse(context);
+    return options.inverse(context);
   })
 
   Handlebars.registerHelper('handleParam', (tsType, str, prefix) => {
@@ -421,14 +421,14 @@ module.exports = (Handlebars, _) =>{
     let moduleAlias = _.camelCase(obj.name);
     const moduleFile = _.kebabCase(obj.name);
 
-		if (moduleFile === 'default') {
-			moduleAlias = 'defaultResource'
-		}
+    if (moduleFile === 'default') {
+      moduleAlias = 'defaultResource'
+    }
 
     return `import * as ${moduleAlias} from './${moduleFile}';`;
   });
 
-	Handlebars.registerHelper('camelCase', (str) => {
+  Handlebars.registerHelper('camelCase', (str) => {
     return _.camelCase(str);
   });
 
@@ -442,9 +442,9 @@ module.exports = (Handlebars, _) =>{
   Handlebars.registerHelper('resourceAlias', (obj) => {
     const moduleAlias = _.camelCase(obj.name);
 
-		if (moduleAlias === 'default') {
-			return 'defaultResource';
-		}
+    if (moduleAlias === 'default') {
+      return 'defaultResource';
+    }
 
     return moduleAlias;
   });
@@ -481,7 +481,7 @@ module.exports = (Handlebars, _) =>{
 
     if (icon.startsWith('./')) {
       // file:name.ext
-			const filename = icon.split('/').pop()
+      const filename = icon.split('/').pop()
       return `file:${filename}`
     }
   });
@@ -499,90 +499,91 @@ module.exports = (Handlebars, _) =>{
       default: '',
     };
 
-		const displayOptionsShow = _.get(credentials[0], 'displayOptions.show', {})
-		const displayOptionsShowKey = Object.keys(displayOptionsShow)[0]
+    const displayOptionsShow = _.get(credentials[0], 'displayOptions.show', {})
+    const displayOptionsShowKey = Object.keys(displayOptionsShow)[0]
 
     baseProperties.options = credentials.map((cred) => {
-			const displayOptionsValueStr = _.get(cred, `displayOptions.show.${displayOptionsShowKey}[0]`, cred.name)
-			// trim =
-			const displayOptionsValue = displayOptionsValueStr.replace(/^=/, '')
+      const displayOptionsValueStr = _.get(cred, `displayOptions.show.${displayOptionsShowKey}[0]`, cred.name)
+      // trim =
+      const displayOptionsValue = displayOptionsValueStr.replace(/^=/, '')
       return {
         name: cred.displayName || cred.name,
         value: displayOptionsValue,
       };
     });
 
-		baseProperties.name = displayOptionsShowKey || 'authentication';
+    baseProperties.name = displayOptionsShowKey || 'authentication';
     baseProperties.default = _.get(baseProperties, 'options[0].value', '');
 
     return JSON.stringify([baseProperties], null, 2);
   });
 
 
-	Handlebars.registerHelper('jsValue', (obj) => {
+  Handlebars.registerHelper('jsValue', (obj) => {
 
-		function renderJsValue(value) {
-			// render expressions as is
-			// ${expression} -> expression
-			const expressionRegex = /^\$\{(.*)\}$/;
-			if (typeof value === 'string' && expressionRegex.test(value)) {
-				const expression = value.replace(expressionRegex, '$1');
-				return expression;
-			}
+    function renderJsValue(value) {
+      // render expressions as is
+      // ${expression} -> expression
+      const expressionRegex = /^\$\{(.*)\}$/;
+      if (typeof value === 'string' && expressionRegex.test(value)) {
+        const expression = value.replace(expressionRegex, '$1');
+        return expression;
+      }
 
-			if (typeof value === 'string') {
-				return JSON.stringify(value)
-			}
+      if (typeof value === 'string') {
+        return JSON.stringify(value)
+      }
 
-			if (Array.isArray(value)) {
-				return `[${value.map(renderJsValue).join(', ')}]`
-			}
+      if (Array.isArray(value)) {
+        return `[${value.map(renderJsValue).join(', ')}]`
+      }
 
-			if (typeof value === 'object') {
-				return renderJsObject(value)
-			}
+      if (typeof value === 'object') {
+        return renderJsObject(value)
+      }
 
-			return JSON.stringify(value)
-		}
+      return JSON.stringify(value)
+    }
 
-		function renderKey(key) {
-			if (key.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/)) {
-				return key;
-			}
+    function renderKey(key) {
+      if (key.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/)) {
+        return key;
+      }
 
-			return JSON.stringify(key);
-		}
+      return JSON.stringify(key);
+    }
 
-		function renderJsEntry(key, value) {
-			return `${renderKey(key)}: ${renderJsValue(value)}`
-		}
+    function renderJsEntry(key, value) {
+      return `${renderKey(key)}: ${renderJsValue(value)}`
+    }
 
-		function renderJsObject(obj) {
-			const entries = Object.entries(obj)
-				// sort by key
-				// place displayName first
-				// otherwise sort alphabetically
-				.sort(([keyA], [keyB]) => {
-					if (keyA === 'displayName') {
-						return -1;
-					}
+    function renderJsObject(obj) {
+      const entries = Object.entries(obj)
+        // sort by key
+        // place displayName first
+        // otherwise sort alphabetically
+        .sort(([keyA], [keyB]) => {
+          if (keyA === 'displayName') {
+            return -1;
+          }
 
-					if (keyB === 'displayName') {
-						return 1;
-					}
+          if (keyB === 'displayName') {
+            return 1;
+          }
 
-					return 0;
-				})
-				.map(([key, value]) => renderJsEntry(key, value))
-			const js = `{
+          return 0;
+        })
+        .map(([key, value]) => renderJsEntry(key, value))
+      const js = `{
 					${entries.join(',\n')}
 			}`;
-			return js;
-		}
+      return js;
+    }
 
-		const js = renderJsValue(obj);
+    const js = renderJsValue(obj);
 
-    return js;
-	});
+    // remove ,, from the string
+    return js.replace(/,,/g, ',');
+  });
 
 };
