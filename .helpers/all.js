@@ -524,9 +524,12 @@ module.exports = (Handlebars, _) => {
     function renderJsValue(value) {
       // render expressions as is
       // ${expression} -> expression
-      const expressionRegex = /^\$\{(.*)\}$/;
-      if (typeof value === 'string' && expressionRegex.test(value)) {
-        const expression = value.replace(expressionRegex, '$1');
+      // support for multiple expressions
+      // start with ${ and end with }
+      const isExpression = typeof value === 'string' && value.trim().startsWith('${') && value.trim().endsWith('}');
+
+      if (typeof value === 'string' && isExpression) {
+        const expression = value.trim().slice(2, -1).trim();
         return expression;
       }
 
