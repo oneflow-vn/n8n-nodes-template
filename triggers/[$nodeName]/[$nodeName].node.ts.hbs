@@ -1,16 +1,8 @@
-import type {
-	IHookFunctions,
-	IWebhookFunctions,
-	IDataObject,
-	INodeType,
-	INodeTypeDescription,
-	IWebhookResponseData,
-	JsonObject,
-} from 'n8n-workflow';
-import { NodeConnectionType, NodeApiError, NodeOperationError } from 'n8n-workflow';
+import type { INodeType, INodeTypeDescription } from 'n8n-workflow';
 import { methods } from './{{nodeName}}.methods';
 import { webhookMethods } from './{{nodeName}}.webhookMethods';
 import { webhook } from './{{nodeName}}.webhook';
+import { properties } from './{{nodeName}}.properties';
 
 export class {{nodeName}} implements INodeType {
 	description: INodeTypeDescription = {
@@ -26,7 +18,7 @@ export class {{nodeName}} implements INodeType {
 			name: 'Github Trigger',
 		},
 		inputs: [],
-		outputs: [NodeConnectionType.Main],
+		outputs: ['main'],
 		credentials: [],
 		webhooks: [
 			{
@@ -36,7 +28,7 @@ export class {{nodeName}} implements INodeType {
 				path: 'webhook',
 			},
 		],
-		properties: [],
+		properties,
 	};
 
 	webhookMethods = webhookMethods;
