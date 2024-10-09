@@ -6,28 +6,21 @@ import { properties } from './{{nodeName}}.properties';
 
 export class {{nodeName}} implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Github Trigger',
-		name: 'githubTrigger',
-		icon: { light: 'file:github.svg', dark: 'file:github.dark.svg' },
+		displayName: '{{displayName}}',
+		name: '{{camelCase nodeName}}',
+		icon: '{{nodeIcon icon}}',
 		group: ['trigger'],
 		version: 1,
 		subtitle:
-			'=\{\{$parameter["owner"] + "/" + $parameter["repository"] + ": " + $parameter["events"].join(", ")\}\}',
-		description: 'Starts the workflow when Github events occur',
+			'=\{\{$parameter["resource"] + ": " + $parameter["event"].join(", ")\}\}',
+		description: '{{description}}',
 		defaults: {
-			name: 'Github Trigger',
+			name: '{{defaultName}}',
 		},
 		inputs: [],
 		outputs: ['main'],
 		credentials: [],
-		webhooks: [
-			{
-				name: 'default',
-				httpMethod: 'POST',
-				responseMode: 'onReceived',
-				path: 'webhook',
-			},
-		],
+		webhooks: {{jsValue webhooks}},
 		properties,
 	};
 
